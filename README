@@ -1,0 +1,34 @@
+What: pam_mkhomedir.so.1
+Who: <benr@cuddletech.com> 
+When: July, 2011
+
+DESCRIPTION
+-----------
+
+This project has several purposes.  Firstly, it was an attempt to gain a much
+deeper understanding of PAM, from the inside out.  Secondly, Linux PAM's 
+pam_mkhomedir didn't work for me on OpenSolaris.
+
+The code is a mish-mash.  The template for the module itself comes 
+from sample_open_session.c within OpenSolaris.  Furthermore, in trying to 
+find the best way to create home directories I found a nice program file
+within OpenSolaris that already did exactly what I needed, so I borrowed
+that too, homedir.c.  That file depends on messages.h, so its included
+here as well.
+
+The Makefile expects Sun Studio (SUNWspro).
+
+
+
+HOW TO USE IT
+--------------
+
+Copy the pam_mkhomedir.so.1 to /usr/lib/security, then symlink it to
+pam_mkhomedir.so.  Add the following into /etc/pam.conf:
+
+other   session required        pam_mkhomedir.so.1 
+
+It will use /etc/skel for the user directory skeleton, this is not 
+configurable.
+
+
